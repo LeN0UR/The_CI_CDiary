@@ -1,4 +1,4 @@
-# 🧭 The DevOps Learning Journey — *by Abdirahman Nour*
+# 🧭 The DevOps Learning Journey  *(Nour's personal notes)*
 
 Welcome to my **DevOps Learning Repository** — my central hub for all notes, labs, and projects as I move from beginner to professional in DevOps, infrastructure, and cloud engineering.
 
