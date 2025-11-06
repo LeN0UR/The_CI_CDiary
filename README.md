@@ -29,13 +29,32 @@ This repo tracks (Almost) everything I’ve built, broken, debugged, and learned
 Each module contains notes, labs, and projects.
 
 ```bash
-devops-learning/
+THE_CI_CDIARY/
 ├── Linux/
+├── Bash/
 ├── Git/
 ├── Networking/
 ├── Docker/
 ├── AWS/
 ├── Terraform/
 ├── CI-CD/
+├── Next steps/
+├── Linkedin Tips/
+├── Useful Links/
 └── README.md
+
+Each respective folder have their own subfolders (Notes, Labs and projects :) )
+
+---
+
+## 🧭 Learning Timeline highlights (needs an update many things done since these haha)
+
+- 🐧 Installed Ubuntu through VirtualBox and explored the Linux environment  
+- 🔐 Generated SSH keys and connected GitHub through the Windows terminal  
+- 💻 Completed Bash modules — learned shell scripting, permissions, and CLI fundamentals  
+- 🌿 Worked through Git & GitHub modules — branching, merging, committing, pushing  
+- 🌐 Hosted an Nginx website on an AWS EC2 instance and managed a domain via Cloudflare  
+- 🐳 Moved on to Docker — containerized a Flask app and learned Docker Compose  
+- 🧠 Continued improving Linux, networking, and automation skills through labs and projects
+
 
