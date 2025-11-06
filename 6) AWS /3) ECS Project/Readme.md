@@ -1,4 +1,7 @@
-# 🚀 AWS ECS Project **(Summary & Plan)**
+# 🚀 AWS ECS Project **(Summary & Plan ONLY)**
+
+# I will be attatching a link here to the public repo of the ecs project soon 
+
 
 ## 🎯 Objective
 Build, containerise, and deploy an application using **Docker**, **Terraform**, and **Amazon ECS (Fargate)** with **HTTPS** and a **custom domain**, just like a real production setup.  
