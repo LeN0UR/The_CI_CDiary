@@ -1,53 +1,170 @@
-# Linux Challenges — Bandit Wargame (OTW) & SadServers
+#  🐧 Linux Notes 🐧 
 
-**Summary:** Walkthrough / proof-of-work for the OverTheWire **Bandit** wargame levels I completed, plus a recommended next challenge (*SadServers*) to level-up Linux & pentest fundamentals. This README includes the challenge summary and a compact table of the most important / most-often-used Linux commands with short examples so you can copy them quickly.
+**Purpose:**  
+This folder serves as my personal Linux cheat sheet — a reference of the most important and frequently used commands, collected while learning through **OverTheWire Bandit**, **SadServers**, and everyday Linux practice.
 
-## What I completed
-### Main challenge: OverTheWire — **Bandit**
-I completed Bandit up through level 13 as my primary learning challenge. This exercise is excellent for learning basic Linux navigation, file I/O, permissions, SSH, pipes, compression tools, and simple scripting.
+---
 
-**Proof (passwords you provided):**
-- bandit5: `4oQYVPkxZOOEOO5pTW81FB8j8lxXGUQw`  
-- bandit6: `HWasnPhtq9AVKe0dmk45nxy20cvUa6EG`  
-- bandit7: `morbNTDkSW6jIlUc0ymOdMaLnOlFVAaj`  
-- bandit8: `dfwvzFQi4mU0wfNbFOe9RoWskMLg7eEc`  
-- bandit9: `4CKMh1JI91bUIZZPXDqGanal4xvAg0JM`  
-- bandit10: `FGUW5ilLVJrxX9kMYMmlN4MgbpfMiqey`  
-- bandit11: `dtR173fZKb0RRsDFSGsg2RWnpNVj3qRr`  
-- bandit12: `7x16WNeHIi5YkIhWsfFIqoognUTyj9Q4`  
-- bandit13: `FO5dwFsc0cbaIiH0h8J2eUks2vdTDwAn`
+## ⚙️ Environment Setup
+I’m running Linux on **Windows** via **WSL (Windows Subsystem for Linux)** with **Zsh** as my default shell and the **Powerlevel10k** theme for a fast and visually rich prompt.
 
-## Next recommended challenge: **SadServers**
-If you want to continue improving practical Linux and small-scale exploitation skills after Bandit, **SadServers** (or any beginner-safe CTF that focuses on web services, simple binary exploitation, and service misconfigurations) is an excellent next step. It builds on:
+| Tool | Description | Link |
+|------|--------------|------|
+| 🐧 **WSL 2** | Linux kernel integration on Windows 10/11 | [Install WSL](https://learn.microsoft.com/en-us/windows/wsl/install) |
+| 💻 **Zsh** | Default shell replacing Bash | `sudo apt install zsh` |
+| 🎨 **Powerlevel10k** | Beautiful Zsh prompt theme | [GitHub → romkatv/powerlevel10k](https://github.com/romkatv/powerlevel10k) |
 
-- network/service enumeration (nmap, netcat, ss)
-- basic web exploitation (HTTP requests, directory traversal, misconfigured servers)
-- reading server logs, automating tasks with shell scripts
-- privilege escalation basics
+---
 
-## What I learned
-- SSH basics: key-based and password logins; how challenges provide small isolated accounts.
-- File & directory inspection: `ls`, `file`, `strings`, `less`, `head`, `tail`.
-- Permissions & ownership: `chmod`, `chown`, SUID/SGID concepts.
-- Data transformation: `grep`, `awk`, `sed`, `cut`, `tr`, `sort`, `uniq`.
-- Remote interaction and debugging: `nc`, `curl`, `wget`.
-- Archiving/compression: `tar`, `gzip`, `bzip2`, `zip`, `unzip`.
-- Service inspection & systemd: `ps`, `ss`, `systemctl`, `journalctl`.
+## 🧰 Most Important / Most-Used Linux Commands (at least for me anyways)
 
-## Most important / most-often-used Linux commands (copyable table)
-
-| Command | What it does (one line) | Common usage / example |
-|---|---:|---|
-| `ls` | List files & directories | `ls -lah` — human-readable long listing including hidden files |
+| Command | What it does | Example |
+|----------|---------------|----------|
+| `ls` | List files & directories | `ls -lah` — human-readable listing including hidden files |
 | `cd` | Change directory | `cd /var/log` |
-| `pwd` | Print working directory | `pwd` |
-| `cat` | Concatenate & display file | `cat file.txt` |
-| `less` | Paginate through a file (back/forward) | `less /var/log/syslog` |
-| `head` | Show first lines of a file | `head -n 20 file.txt` |
-| `tail` | Show last lines of a file (follow) | `tail -f /var/log/nginx/access.log` |
-| `grep` | Search text with patterns | `grep -i "error" logfile | less` |
-| `find` | Find files by name/attributes | `find . -type f -name "*.conf"` |
-| `file` | Tell file type | `file secret.bin` |
-| `stat` | Show file metadata | `stat myscript.sh` |
-| `chmod` | Change permissions | `ch
+| `pwd` | Show current directory | `pwd` |
+| `cat` | View file contents | `cat file.txt` |
+| `less` | Scroll through file (page view) | `less /var/log/syslog` |
+| `head` | Show first lines | `head -n 20 file.txt` |
+| `tail` | Show last lines or follow live logs | `tail -f /var/log/nginx/access.log` |
+| `grep` | Search text using patterns | `grep -i "error" logfile` |
+| `find` | Search files by name/permissions | `find / -type f -name "*.conf" 2>/dev/null` |
+| `file` | Identify file type | `file secret.bin` |
+| `stat` | Show detailed file info | `stat myscript.sh` |
+| `chmod` | Change permissions | `chmod 755 script.sh` |
+| `chown` | Change ownership | `chown root:root file.txt` |
+| `sudo` | Run commands as root | `sudo apt update` |
+| `su` | Switch user | `su -` |
+| `ssh` | Remote login via SSH | `ssh user@host -p 22` |
+| `scp` | Copy files over SSH | `scp file.txt user@host:/tmp/` |
+| `rsync` | Efficient sync/copy tool | `rsync -avP src/ dest/` |
+| `tar` | Archive/extract files | `tar -xzvf archive.tar.gz` |
+| `gzip` / `gunzip` | Compress/decompress | `gzip file && gunzip file.gz` |
+| `zip` / `unzip` | Zip utilities | `unzip archive.zip` |
+| `nano` / `vi` | Text editors | `nano notes.txt` or `vi script.sh` |
+| `awk` | Field-based text processing | `awk '{print $1,$3}' file` |
+| `sed` | Stream text editing | `sed 's/foo/bar/g' file.txt` |
+| `cut` | Extract columns | `cut -d: -f1 /etc/passwd` |
+| `sort` | Sort lines | `sort file.txt` |
+| `uniq` | Remove duplicates | `sort file | uniq -c` |
+| `wc` | Count words, lines, chars | `wc -l file.txt` |
+| `ps` | Show processes | `ps aux | grep ssh` |
+| `top` / `htop` | View running processes interactively | `top` |
+| `ss` / `netstat` | Show open ports & sockets | `ss -tulpn` |
+| `curl` | Fetch URLs from CLI | `curl -I https://example.com` |
+| `wget` | Download files | `wget http://example.com/file` |
+| `ip` | Display network info | `ip addr show` |
+| `systemctl` | Manage systemd services | `systemctl status sshd` |
+| `journalctl` | View system logs | `journalctl -u sshd --since "1 hour ago"` |
+| `crontab` | Schedule tasks | `crontab -l` |
+| `ln` | Create symlinks | `ln -s /path/to/file ~/link` |
+| `mkdir` | Make directories | `mkdir -p ~/projects/bandit` |
+| `rm` | Delete files/directories | `rm -rf /tmp/test` (⚠️ be careful) |
+| `touch` | Create file / update timestamp | `touch newfile` |
+| `history` | Show command history | `history | grep ssh` |
+| `strings` | Extract readable text from binaries | `strings binary | less` |
+| `tr` | Translate or delete characters | `tr -d '\r' < dosfile > unixfile` |
+| `nc` (netcat) | Read/write over network | `nc -lvnp 4444` |
+| `openssl` | SSL/TLS and crypto utility | `openssl s_client -connect host:443` |
+
+---
+
+## 💡 Pro Tips
+- Use `man <command>` to read a command’s manual.  
+- Chain commands with `|` and redirect output with `>` or `>>`.  
+- Use `grep`, `awk`, and `sed` together for fast text filtering.  
+- When in doubt, `pwd`, `ls`, and `file` tell you what you’re looking at.  
+- Keep a separate file like `cheats.md` for personal one-liners.
+
+---
+
+## 🧭 Related Notes
+If you want to replicate my setup (and your on windows):
+- [Powerlevel10k GitHub](https://github.com/romkatv/powerlevel10k)
+- [Oh My Zsh](https://ohmyz.sh/)
+- [Install WSL (Microsoft Docs)](https://learn.microsoft.com/en-us/windows/wsl/install)
+
+---
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
