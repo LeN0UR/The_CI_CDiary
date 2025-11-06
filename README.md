@@ -1,6 +1,6 @@
 # 🧭 The DevOps Learning Journey  *(Nour's personal notes)*
 
-Welcome to my **DevOps Learning Repository** — my central hub for all notes, labs, and projects as I move from beginner to professional in DevOps, infrastructure, and cloud engineering.
+Welcome to **the CI/CDiary**! This is my personal central hub for all notes, labs, and projects as I move from beginner to professional in DevOps, infrastructure, and cloud engineering.
 
 This repo tracks (Almost) everything I’ve built, broken, debugged, and learned along the way. From foundational Linux skills to full-scale cloud deployments and automation.
 
@@ -19,7 +19,7 @@ This repo tracks (Almost) everything I’ve built, broken, debugged, and learned
 - Terraform (IaC + Cloud Init automation)  
 - GitHub Actions / CI CD  
 
-🧠 Every module includes assignments, projects, and automation scripts — all committed here for review and reference.  
+🌊 Every module includes notes, assignments/labs, projects, all committed here for review and reference.  
 💡 Currently exploring deeper topics in ECS, Terraform modules, and production-grade pipelines.
 
 ---
@@ -43,11 +43,11 @@ THE_CI_CDIARY/
 ├── Useful Links/
 └── README.md
 
-Each respective folder have their own subfolders (Notes, Labs and projects :) )
+As stated earlier each respective folder have their own subfolders ( Notes, Labs and projects 😊)
 
 ---
 
-## 🧭 Learning Timeline highlights (needs an update many things done since these haha)
+## 🧭 Learning Timeline highlights (currently outdated, many things done since these haha)
 
 - 🐧 Installed Ubuntu through VirtualBox and explored the Linux environment  
 - 🔐 Generated SSH keys and connected GitHub through the Windows terminal  
