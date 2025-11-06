@@ -1,7 +1,7 @@
 #  🐧 Linux Notes 🐧 
 
 **Purpose:**  
-This folder serves as my personal Linux cheat sheet — a reference of the most important and frequently used commands, collected while learning through **OverTheWire Bandit**, **SadServers**, and everyday Linux practice.
+This folder serves as my personal Linux cheat sheet. A reference of the most important and frequently used commands, collected while learning through **OverTheWire Bandit**, **SadServers**, and everyday Linux practice.
 
 ---
 
