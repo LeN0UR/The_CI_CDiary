@@ -3,25 +3,26 @@
 # I will be attatching a link here to the public repo of the ecs project soon 
 
 # Quick steps
-# Pick the right app for me, considering memos
-# make the dockerfile 
+
+ 1)Pick the right app for me, considering memos
+ 2) make the dockerfile 
 
 
 
 # Quick notes
 
-# 1) time how long it takes to push to Amazon ECR manually and automatically. Get the time difference and percentage change
+1) time how long it takes to push to Amazon ECR manually and automatically. Get the time difference and percentage change
 
-# 2) implement securirty practices like running the app as a non-root user. If you don’t explicitly specify a user or group in your Dockerfile using the USER instruction, then:
-# If no USER is specified...
-# Everything runs as:
-# user: root
-# group: root
-# Which is something we want to avoid as engineers that implement the pricinciple of the least priveleged. 
+ 2) implement securirty practices like running the app as a non-root user. If you don’t explicitly specify a user or group in your Dockerfile using the USER instruction, then:
+ If no USER is specified...
+ Everything runs as:
+ user: root
+ group: root
+ Which is something we want to avoid as engineers that implement the pricinciple of the least priveleged. 
 
-# 3) Implement DRY principles, for example if you want to make two subnets just make 1 and code it to make two
+ 3) Implement DRY principles, for example if you want to make two subnets just make 1 and code it to make two
 
-# 4) Figure out if I want CMD or ENTRYPOINT For my Dockerfile
+ 4) Figure out if I want CMD or ENTRYPOINT For my Dockerfile
 
 
 
