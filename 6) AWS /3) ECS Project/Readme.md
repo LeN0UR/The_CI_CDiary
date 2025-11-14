@@ -1,34 +1,81 @@
-# 🚀 AWS ECS Project **(Summary & Plan ONLY)**
-
-# I will be attatching a link here to the public repo of the ecs project soon 
-
-# Quick steps
-
- 1)Pick the right app for me, considering memos
- 2) make the dockerfile 
-
-
-
-# Quick notes
-
-1) time how long it takes to push to Amazon ECR manually and automatically. Get the time difference and percentage change
-
- 2) implement securirty practices like running the app as a non-root user. If you don’t explicitly specify a user or group in your Dockerfile using the USER instruction, then:
- If no USER is specified...
- Everything runs as:
- user: root
- group: root
- Which is something we want to avoid as engineers that implement the pricinciple of the least priveleged. 
-
- 3) Implement DRY principles, for example if you want to make two subnets just make 1 and code it to make two
-
- 4) Figure out if I want CMD or ENTRYPOINT For my Dockerfile
-
-
+#  AWS ECS Project **(Summary & Plan ONLY)**
 
 ## 🎯 Objective
-Build, containerise, and deploy an application using **Docker**, **Terraform**, and **Amazon ECS (Fargate)** with **HTTPS** and a **custom domain**, just like a real production setup.  
-The goal: go from **manual ClickOps → Terraform IaC → automated CI/CD**.
+Build, containerise, and deploy a real application using **Docker**, **Terraform**, and **Amazon ECS (Fargate)** with **HTTPS** and a **custom domain**.
+
+This worflow will follow: **manual ClickOps → Terraform IaC → CI/CD automation**.
+
+---
+
+# Principles for this project:
+
+1) DRY, avoid duplication (e.g., use count/for_each for subnets instead of repeating blocks). 
+2) Least Privelege, IAM policies and Docker container user should always follow minimal access.
+3) AWS Well-Architected Framework, especially Security, Reliability, and Operational Excellence.
+4) Reproducibility, pin Terraform module versions to avoid breakage.
+5) Security by Design, scanning images (Trivy, Checkov), no hardcoded creds, use GitHub Secrets / OIDC.
+
+# Quick initial steps
+
+ 1) Pick the application (Most likely memos right now)
+ 2) Write Dockerfile --> Make it multi-stage, non-root user, and use .dockerignore
+ 3) Test container locally. Confirm health endpoint works.
+ 4) Push image to ECR and time manual vs automated pushes (time difference and percentage change)  
+
+# General notes and PERSONAL REMINDERS
+
+1) Use non-root user in Dockerfile (default = root → not acceptable for production).
+
+2) Decide between CMD vs ENTRYPOINT depending on whether the app needs override flexibility.
+
+3) Use pre-commit hooks for Terraform quality:
+repos:
+  - repo: https://github.com/some/repo
+    rev: 1.18.0
+    hooks:
+      - id: terraform_validate
+      - id: terraform_fmt
+      - id: terraform_tflint
+
+  This falls in line with the performance efficiency of the aws arcitechured framework pillar
+
+4) Never store credentials in code → use GitHub Secrets or AWS OIDC integration.
+
+5) Explore DevSecOps tools early:
+
+Trivy (image and IaC scanning)
+Checkov (Terraform/static analysis) 
+
+6) Pin my terraform module so it is reproducible months or years later, aboids sudden breakage from updates a
+
+
+# Common ECS questions
+
+1) How did you ensure your application was highly available?
+→ Multiple AZs, ALB health checks, Fargate tasks across subnets, auto-healing, no single point of failure. 
+
+# Useful links
+
+AWS Well-Architected Framework
+1) https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html
+
+ECS Documentation
+2) https://docs.aws.amazon.com/ecs/
+
+Terraform AWS Provider Docs
+3) https://registry.terraform.io/providers/hashicorp/aws/latest/docs
+
+Terraform ECS Module
+4) https://registry.terraform.io/modules/terraform-aws-modules/ecs/aws/latest
+
+Terraform VPC Module
+5) https://registry.terraform.io/modules/terraform-aws-modules/vpc/aws/latest
+
+Memos GitHub
+6) https://github.com/usememos/memos
+
+ALB Documentation
+7) https://docs.aws.amazon.com/elasticloadbalancing/latest/application/introduction.html
 
 ---
 
@@ -56,7 +103,7 @@ flowchart LR
   ALB -.-> ACM[(ACM Cert)]
   User -->|DNS| R53[(Route 53 Record)]
 
-
+---
 
 
 
