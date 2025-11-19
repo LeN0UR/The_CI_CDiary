@@ -104,12 +104,16 @@ flowchart LR
   User -->|DNS| R53[(Route 53 Record)]
 
 ---
+click ops notes:
 
-Clickops:
+When making task definition for ecs i altered task size as the default was to large. reduced it to 0.25 vCPU and 0.5gb memory as memos is light weight and ruins fine on minimal settings.
+
+
+Clickops errors
 
 errors i ran into: There was an error creating cluster ecs-clickops-memos-cluster.
 Resource handler returned message: "Invalid request provided: CreateCluster Invalid Request: Unable to assume the service linked role. Please verify that the ECS service linked role exists. (Service: AmazonECS; Status Code: 400; Error Code: InvalidParameterException; Request ID: 614fa368-f78a-4bab-8c0d-2ea184801699; Proxy: null)" (RequestToken: 357b75b2-1d3e-5d2c-2125-a5399380d83a, HandlerErrorCode: InvalidRequest)
 
 ## This was during the creation of the ecs cluster
-## Solution was to
+## Solution made me feel pretty stupid, in my last session was working on eu-2 region and every time i login to my non-root it defaults to global. This is the kind of mistake you tend to remember hahaha
 
