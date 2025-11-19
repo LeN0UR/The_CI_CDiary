@@ -105,5 +105,11 @@ flowchart LR
 
 ---
 
+Clickops:
 
+errors i ran into: There was an error creating cluster ecs-clickops-memos-cluster.
+Resource handler returned message: "Invalid request provided: CreateCluster Invalid Request: Unable to assume the service linked role. Please verify that the ECS service linked role exists. (Service: AmazonECS; Status Code: 400; Error Code: InvalidParameterException; Request ID: 614fa368-f78a-4bab-8c0d-2ea184801699; Proxy: null)" (RequestToken: 357b75b2-1d3e-5d2c-2125-a5399380d83a, HandlerErrorCode: InvalidRequest)
+
+## This was during the creation of the ecs cluster
+## Solution was to
 
