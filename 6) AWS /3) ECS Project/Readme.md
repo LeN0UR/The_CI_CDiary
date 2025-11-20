@@ -94,7 +94,7 @@ ALB Documentation
 
 ---
 
-##CLICKOPS notes:
+# CLICKOPS notes:
 
 When making task definition for ecs i altered task size as the default was to large. reduced it to 0.25 vCPU and 0.5gb memory as memos is light weight and ruins fine on minimal settings.
 
@@ -108,7 +108,7 @@ This is why ECS tasks bounce between subnets/AZs
 This is real production-grade knowledge.
 and so much more this readme would get tiring.
 
-##CLICKOPS errors
+# CLICKOPS errors
 
 errors i ran into: There was an error creating cluster ecs-clickops-memos-cluster.
 Resource handler returned message: "Invalid request provided: CreateCluster Invalid Request: Unable to assume the service linked role. Please verify that the ECS service linked role exists. (Service: AmazonECS; Status Code: 400; Error Code: InvalidParameterException; Request ID: 614fa368-f78a-4bab-8c0d-2ea184801699; Proxy: null)" (RequestToken: 357b75b2-1d3e-5d2c-2125-a5399380d83a, HandlerErrorCode: InvalidRequest)
@@ -119,7 +119,6 @@ my est task not reaching a healthy state every 2/3 minutes (RUNNING → DRAINING
 so i checked the releavant networks and updated correctly.
 
 made the error of using a a default sg for my alb, promptly changed that. Now able to access the website.
-
 
 
 ## This was during the creation of the ecs cluster
