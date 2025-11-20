@@ -94,7 +94,208 @@ ALB Documentation
 
 ---
 
-# CLICKOPS notes:
+### CLICKOPS
+
+
+# 📘 AWS ECS ClickOps Deployment (Manual Provisioning)
+
+This section documents the **ClickOps phase** of deploying **Memos** on AWS ECS with a custom domain, HTTPS termination, ALB routing, and complete networking.  
+The goal of this manual phase is to build deep intuition for AWS services before implementing full automation with Terraform + CI/CD.
+
+---
+
+# 🏗️ Architecture Overview
+
+The following components were created manually in the AWS Console:
+
+- **VPC** (`10.0.0.0/16`)
+- **Public + Private Subnets** in two AZs
+- **Internet Gateway & Route Tables**
+- **Security Groups** (ALB + ECS)
+- **Application Load Balancer (ALB)** with HTTP + HTTPS
+- **Target Group** for port 5230
+- **ECS Fargate Cluster, Task Definition, Service**
+- **ACM TLS Certificate** for domain
+- **Route 53 Hosted Zone** with Alias A-record to ALB
+
+Final result:  
+👉 **https://nourdemo.com** serving the live Memos application.
+
+---
+
+# 🧱 1. VPC & Networking Setup
+
+## 🔹 VPC
+- CIDR: `10.0.0.0/16`
+
+## 🔹 Subnets
+
+| Subnet Type | AZ          | CIDR Block      |
+|-------------|-------------|-----------------|
+| Public      | eu-west-2a  | `10.0.1.0/24`   |
+| Public      | eu-west-2b  | `10.0.3.0/24`   |
+| Private     | eu-west-2a  | `10.0.2.0/24`   |
+| Private     | eu-west-2b  | `10.0.4.0/24`   |
+
+## 🔹 Routing
+- Created **Internet Gateway** and attached to VPC
+- Public Route Table:
+  - `0.0.0.0/0 → igw-xxxx`
+- Associated both public subnets
+
+Private subnets remained isolated (no NAT).
+
+---
+
+# 🔐 2. Security Groups
+
+## **ecs-clickops-alb-sg** (Load Balancer)
+**Inbound:**
+- HTTP 80 → `0.0.0.0/0`
+- HTTPS 443 → `0.0.0.0/0`
+
+**Outbound:** all allowed
+
+---
+
+## **ecs-clickops-ecs-sg** (ECS Tasks)
+**Inbound:**
+- TCP **5230** → **ecs-clickops-alb-sg**  
+  *(Allows ALB → ECS traffic)*
+
+**Outbound:** all allowed
+
+---
+
+# ⚖️ 3. Application Load Balancer
+
+## **Configuration**
+- Type: **Application Load Balancer**
+- Scheme: **Internet-facing**
+- Subnets: both **public** subnets
+- Security group: `ecs-clickops-alb-sg`
+
+## **Listeners**
+- **HTTP : 80**
+  - Action: Redirect → HTTPS:443
+- **HTTPS : 443**
+  - Certificate: ACM for `nourdemo.com`
+  - Target: memos target group
+
+---
+
+# 🎯 4. Target Group
+
+- Type: **IP**
+- Protocol: HTTP
+- Port: **5230**
+- Health check:
+  - Path: `/`
+  - Port: `traffic-port`
+
+Targets registered automatically by ECS.
+
+---
+
+# 🚀 5. ECS Setup
+
+## 🔹 Cluster
+- Name: `ecs-clickops-memos-cluster`
+- Launch type: **Fargate**
+
+## 🔹 Task Definition
+- Runtime: **Fargate**
+- CPU: 0.25 vCPU  
+- Memory: 0.5 GB  
+- Network mode: **awsvpc**
+- Container:
+  - Image: `neosmemo/memos:latest`
+  - Port: **5230**
+  - Logs: CloudWatch enabled
+
+## 🔹 Service
+- Name: `memos-service`
+- Launch type: Fargate
+- Subnets: public subnets
+- Public IP: **Enabled**
+- Load balancing: **Enabled**
+- Target group: memos TG
+- Desired count: **1**
+
+### Debugging performed:
+- Fixed broken ALB → ECS SG rule  
+- Reattached proper target group  
+- Corrected listener routing  
+- Ensured health checks passed
+
+---
+
+# 🔐 6. TLS / HTTPS (ACM)
+
+Requested ACM certificate for:
+
+- `nourdemo.com`
+- `www.nourdemo.com`
+
+Used **DNS validation** (Route 53 CNAMEs auto-created).  
+Certificate status: **Issued**.
+
+Connected certificate to ALB’s **HTTPS:443** listener.
+
+---
+
+# 🌍 7. Route 53 DNS Integration
+
+In Route 53 hosted zone:
+
+### **A (Alias) Record**
+| Name | Type | Value |
+|------|------|--------|
+| *(root)* | A (Alias) | ALB DNS name |
+
+Optional:
+- `www` → CNAME → root domain
+
+This maps:
+
+👉 **https://nourdemo.com** → ALB → ECS → Memos
+
+---
+
+# 🎉 Final Outcome
+
+✔ Fully functioning Memos app on AWS ECS Fargate  
+✔ Secure HTTPS with ACM  
+✔ Custom domain with Route 53  
+✔ Load-balanced, health-checked service  
+✔ Production-grade manual AWS networking  
+✔ Perfect foundation for Terraform automation  
+
+---
+
+# 🔧 Next Steps (Automation)
+
+The next project phase will include:
+
+- Dockerizing the service
+- Manual push to ECR (**measure push time**)
+- Terraform IaC for all infrastructure
+- GitHub Actions CI/CD deployment pipeline
+- Automatic rolling updates to ECS
+
+---
+
+# 🎥 Optional Enhancements
+If you want, you can also add:
+
+- Screenshots  
+- Architectural diagram  
+- Mermaid diagram  
+- A short GIF/video of the final app running  
+
+I can generate these upon request.
+
+
 
 When making task definition for ecs i altered task size as the default was to large. reduced it to 0.25 vCPU and 0.5gb memory as memos is light weight and ruins fine on minimal settings.
 
